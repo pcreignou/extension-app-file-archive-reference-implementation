@@ -1,5 +1,5 @@
 {
-  "name": "file-archive-sample-proxy",
+  "name": "extension-app-file-archive-reference-implementation",
   "version": "1.0.0",
   "scripts": {
     "build": "rm -rf dist && tsc --build tsconfig.json",
