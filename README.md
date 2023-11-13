@@ -6,7 +6,7 @@ This reference implementation models the use case of taking an agreement PDF sen
 ## 1.1 Clone Repo
 
 ```bash
-git clone https://github.docusignhq.com/ACT/file-archive-sample-proxy.git
+git clone https://github.com/docusign/extension-app-file-archive-reference-implementation.git
 ```
 ## 1.2 Setup environment variables for the local repo
 
