@@ -1,0 +1,69 @@
+{
+  "name": "File Archive App",
+  "description": {
+    "short": "App for file archive",
+    "long": "This app is designed to allow for users to archive a signed DocuSign agreement"
+  },
+   "icon": {
+    "data": "PHN2ZyB3aWR0aD0iNDAzIiBoZWlnaHQ9IjQwMyIgdmlld0JveD0iMCAwIDQwMyA0MDMiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik00MDIuMjYxIDAuNTY4ODQ4SDAuMjYwNzQyVjQwMi41NjlINDAyLjI2MVYwLjU2ODg0OFoiIGZpbGw9IiNENUZGMDAiLz4KPHBhdGggZD0iTTM0Ni4zOTEgMzA3LjY4OUg1Ni4wNjY5VjM0Ni43NTdIMzQ2LjM5MVYzMDcuNjg5WiIgZmlsbD0iYmxhY2siLz4KPHBhdGggZD0iTTIwMS4yODIgMjg1LjMxMUwyMjguOTI1IDI1Ny43MjJMMzEyLjk1OCAxNzMuNjM2TDI4NC45OTkgMTQ1LjczTDIyMC44MTYgMjA5Ljk2NlY1MC43OTgySDE4MS42OTZMMTgxLjc0OCAyMDkuOTY2TDExNy41MTMgMTQ1LjczTDg5LjYwNjkgMTczLjYzNkwxNzMuNjQgMjU3LjcyMkwyMDEuMjgyIDI4NS4zMTFaIiBmaWxsPSJibGFjayIvPgo8L3N2Zz4K"
+  },
+  "screenshots": [],
+  "publisher": {
+    "name": "John Doe",
+    "email": "john.doe@gmail.com",
+    "phone": "800-867-5309",
+    "website": "www.johndoe.com"
+  },
+  "termsOfServiceUrl": "www.johndoe.com/tos",
+  "privacyUrl": "www.johndoe.com/privacy",
+  "supportUrl": "www.johndoe.com/support",
+  "connections": [
+    {
+      "name": "authentication",
+      "description": "secure connection to the file archive proxy",
+      "type": "oauth2",
+      "params": {
+        "provider": "CUSTOM",
+        "scopes": [],
+        "clientId": "<CLIENT_ID>",
+        "clientSecret": "<CLIENT_SECRET>", 
+        "customConfig": {
+          "profile": {
+            "url": "<PROXY_BASE_URL>/api/oauth/userinfo",
+            "httpMethod": "GET",
+            "idKey": "sub",
+            "emailKey": "email"
+          },
+          "tokenUrl": "<PROXY_BASE_URL>/api/oauth/token",
+          "authorizationUrl": "<PROXY_BASE_URL>/api/oauth/authorize",
+          "authorizationParams": {
+            "access_type": "offline",
+            "prompt": "consent"
+          },
+          "authorizationMethod": "header",
+          "scopeSeparator": " ",
+          "requiredScopes": []
+        }
+      }
+    }
+  ],
+  "extensions": [
+    {
+      "name": "My Archive Extension",
+      "description": "using to archive an envelope",
+      "template": "EAP.Version1.Archive",
+      "actionReferences": ["My Archive Action"]
+    }
+  ],
+  "actions": [
+    {
+      "name": "My Archive Action",
+      "description": "something about archiving to a proxy",
+      "template": "Document.Version1.Archive",
+      "connectionsReference": "authentication",
+      "params": {
+        "uri": "<PROXY_BASE_URL>/api/archive"
+      }
+    }
+  ]
+}
