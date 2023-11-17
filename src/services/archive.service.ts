@@ -5,9 +5,11 @@ import { IReq, IRes } from '../utils/types';
 
 export const archiveFile = (req: IReq<ArchiveFileBody>, res: IRes) => {
   const {
-    body: { file },
+    body: {
+      files: [file],
+    },
   } = req;
-  const fileBuffer = Buffer.from(file.bytes, 'base64');
+  const fileBuffer = Buffer.from(file.content, 'base64');
   try {
     if (file.path) {
       fs.mkdirSync(file.path, { recursive: true });
