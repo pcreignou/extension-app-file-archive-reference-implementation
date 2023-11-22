@@ -48,7 +48,7 @@ ngrok http <PORT>
 Replace `<PORT>` with the port number in the `development.env` or `production.env` file.
 
 ### 3. Save the forwarding address
-Copy the `Forwarding` address from the response. You’ll need this address in your manifest.json file.
+Copy the `Forwarding` address from the response. You’ll need this address in your `manifest.json` file.
 
 ```bash
 ngrok                                                    
