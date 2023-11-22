@@ -21,8 +21,8 @@ Run the following command to install the necessary dependencies:
 ```bash
 npm install
 ```
-#### 5. Running the proxy server
-Development mode:
+### 5. Running the proxy server
+#### Development mode:
 Start the proxy server in development mode by running the command:
 ```bash
 npm run dev
@@ -30,7 +30,7 @@ npm run dev
 
 This will create a local server on the port in the `development.env` file (port 3000 by default) that listens for local changes that trigger a rebuild.
 
-Production mode:
+#### Production mode:
 Start the proxy server in production mode by running
 npm run build
 npm run start
