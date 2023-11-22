@@ -74,10 +74,10 @@ In this example, the forwarding address to copy is https://bbd7-12-202-171-35.ng
 ## Create an extension app
 1. Prepare your app manifest
 Replace `<PROXY_BASE_URL>` in your manifest.json file with the ngrok forwarding address in the following sections:
-`connections.params.customConfig.profile.url`
-`connections.params.customConfig.tokenUrl`
-`connections.params.customConfig.authorizationUrl`
-`actions.params.uri`
+- `connections.params.customConfig.profile.url`
+- `connections.params.customConfig.tokenUrl`
+- `connections.params.customConfig.authorizationUrl`
+- `actions.params.uri`
 2. Navigate to the DocuSign Developer Console
 Log in with your DocuSign developer credentials and create a new app.
 3. Upload your manifest and create the file archive app
