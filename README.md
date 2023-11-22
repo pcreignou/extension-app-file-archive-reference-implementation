@@ -28,7 +28,7 @@ Start the proxy server in development mode by running the command:
 npm run dev
 ```
 
-This will create a local server on the port in the `development.env`` file (port 3000 by default) that listens for local changes that trigger a rebuild.
+This will create a local server on the port in the `development.env` file (port 3000 by default) that listens for local changes that trigger a rebuild.
 
 Production mode:
 Start the proxy server in production mode by running
