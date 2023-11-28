@@ -15,11 +15,11 @@ export const archiveFile = (req: IReq<ArchiveFileBody>, res: IRes) => {
       fs.mkdirSync(file.path, { recursive: true });
     }
     fs.writeFileSync(path.join(file.path, file.name), fileBuffer);
-    const archiveResult: ArchiveFileResponse = { success: true };
+    const archiveResult: ArchiveFileResponse = { message: 'Successful archive' };
     return res.json(archiveResult);
   } catch (err) {
     console.log(`Encountered an error archiving file: ${err.message}`);
-    const archiveResult: ArchiveFileResponse = { success: false };
+    const archiveResult: ArchiveFileResponse = { message: 'Failed archive' };
     return res.json(archiveResult);
   }
 };

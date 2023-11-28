@@ -15,5 +15,5 @@ export interface ArchiveFileBody {
 }
 
 export interface ArchiveFileResponse {
-  success: boolean;
+  message: string;
 }
