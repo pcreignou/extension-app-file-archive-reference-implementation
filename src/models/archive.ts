@@ -1,15 +1,19 @@
+type SpecifiedFile = {
+  name: string;
+  content: string;
+  contentType: 'bytes' | 'url';
+  path: string;
+  pathTemplateValues?: string[];
+};
+
 export interface ArchiveFileBody {
-  file: {
-    path: string;
-    name: string;
-    type: string;
-    bytes: string;
-    length: number;
-  };
+  files: SpecifiedFile[];
   order?: number;
   overwrite?: boolean;
+  parent?: string;
+  metadata?: Record<string, unknown>;
 }
 
 export interface ArchiveFileResponse {
-  success: boolean;
+  message: string;
 }

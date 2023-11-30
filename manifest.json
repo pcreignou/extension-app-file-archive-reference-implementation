@@ -51,7 +51,7 @@
     {
       "name": "My Archive Extension",
       "description": "using to archive an envelope",
-      "template": "EAP.Version1.Archive",
+      "template": "EAP.Version1.SpecifiedArchive",
       "actionReferences": ["My Archive Action"]
     }
   ],
@@ -59,7 +59,7 @@
     {
       "name": "My Archive Action",
       "description": "something about archiving to a proxy",
-      "template": "Document.Version1.Archive",
+      "template": "Document.Version1.SpecifiedArchive",
       "connectionsReference": "authentication",
       "params": {
         "uri": "<PROXY_BASE_URL>/api/archive"
