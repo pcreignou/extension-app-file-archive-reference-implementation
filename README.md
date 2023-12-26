@@ -17,7 +17,7 @@ The easiest way to generate a secret value is to run the following command:
 node -e "console.log(require('crypto').randomBytes(128).toString('base64'));"
 ```
 
-You will need a value for `JWT_SECRET_KEY`, `OAUTH_CLIENT_ID`, `OAUTH_CLIENT_SECRET`, and `AUTHORIZATION_CODE`.
+You will need values for `JWT_SECRET_KEY`, `OAUTH_CLIENT_ID`, `OAUTH_CLIENT_SECRET`, and `AUTHORIZATION_CODE`.
 
 ### 2. Set the environment variables for the cloned repository
 - If you're running this in a development environment, create a copy of `example.development.env` and save it as `development.env`.
