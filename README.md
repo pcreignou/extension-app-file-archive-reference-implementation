@@ -4,7 +4,7 @@ This reference implementation models the use case of taking an agreement PDF sen
 
 ## Setup instructions
 ### 1. Clone the repository
-Run the following command to clone the repository: 
+Run the following command to clone the repository:
 ```bash
 git clone https://github.com/docusign/extension-app-file-archive-reference-implementation.git
 ```
@@ -22,7 +22,7 @@ You will need values for `JWT_SECRET_KEY`, `OAUTH_CLIENT_ID`, `OAUTH_CLIENT_SECR
 ### 2. Set the environment variables for the cloned repository
 - If you're running this in a development environment, create a copy of `example.development.env` and save it as `development.env`.
 - If you're running this in a production environment, create a copy of `example.production.env` and save it as `production.env`.
-- Replace `JWT_SECRET_KEY`, `OAUTH_CLIENT_ID`, `OAUTH_CLIENT_SECRET`, and `AUTHORIZATION_CODE` in `development.env` or `production.env` with your generated values. These values will be used to configure the sample proxy's mock authentication server. 
+- Replace `JWT_SECRET_KEY`, `OAUTH_CLIENT_ID`, `OAUTH_CLIENT_SECRET`, and `AUTHORIZATION_CODE` in `development.env` or `production.env` with your generated values. These values will be used to configure the sample proxy's mock authentication server.
 - Set the `clientId` value in the manifest.json file to the same value as `OAUTH_CLIENT_ID`.
 - Set the `clientSecret` value in the manifest.json file to the same value as `OAUTH_CLIENT_SECRET`.
 ### 3. [Install and configure Node.js and npm on your machine.](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
@@ -45,7 +45,7 @@ Start the proxy server in production mode by running
 npm run build
 npm run start
 
-This will start a production build on the port in the `production.env` file (port 3000 by default). 
+This will start a production build on the port in the `production.env` file (port 3000 by default).
 ## Setting up ngrok
 ### 1. [Install and configure ngrok for your machine.](https://ngrok.com/docs/getting-started/)
 ### 2. Start ngrok
@@ -61,7 +61,7 @@ Replace `<PORT>` with the port number in the `development.env` or `production.en
 Copy the `Forwarding` address from the response. You’ll need this address in your `manifest.json` file.
 
 ```bash
-ngrok                                                    
+ngrok
 
 Send your ngrok traffic logs to Datadog: https://ngrok.com/blog-post/datadog-log
 
@@ -82,12 +82,10 @@ In this example, the `Forwarding` address to copy is `https://bbd7-12-202-171-35
 ## Create an extension app
 ### 1. Prepare your app manifest
 Replace `<PROXY_BASE_URL>` in your manifest.json file with the ngrok forwarding address in the following sections:
-- `connections.params.customConfig.profile.url`
 - `connections.params.customConfig.tokenUrl`
 - `connections.params.customConfig.authorizationUrl`
 - `actions.params.uri`
 ### 2. Navigate to the Docusign [Developer Console](https://devconsole.docusign.com/)
 Log in with your Docusign developer credentials and create a new app.
 ### 3. Upload your manifest and create the file archive app
-[Create your extension app](https://developers.docusign.com/extension-apps/build-an-extension-app/create/) and [test your connections](https://developers.docusign.com/extension-apps/build-an-extension-app/test/). 
-
+[Create your extension app](https://developers.docusign.com/extension-apps/build-an-extension-app/create/) and [test your connections](https://developers.docusign.com/extension-apps/build-an-extension-app/test/).
