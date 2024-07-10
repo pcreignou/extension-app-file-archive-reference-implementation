@@ -41,9 +41,11 @@ npm run dev
 This will create a local server on the port in the `development.env` file (port 3000 by default) that listens for local changes that trigger a rebuild.
 
 #### Production mode:
-Start the proxy server in production mode by running
+Start the proxy server in production mode by running the commands:
+```bash
 npm run build
 npm run start
+```
 
 This will start a production build on the port in the `production.env` file (port 3000 by default).
 ## Setting up ngrok
