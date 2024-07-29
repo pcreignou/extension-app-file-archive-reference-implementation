@@ -87,7 +87,9 @@ Replace `<PROXY_BASE_URL>` in your manifest.json file with the ngrok forwarding 
 - `connections.params.customConfig.tokenUrl`
 - `connections.params.customConfig.authorizationUrl`
 - `actions.params.uri`
-### 2. Navigate to the Docusign [Developer Console](https://devconsole.docusign.com/)
+### 2. Navigate to the [Developer Console](https://devconsole.docusign.com/apps)
 Log in with your Docusign developer credentials and create a new app.
 ### 3. Upload your manifest and create the file archive app
-[Create your extension app](https://developers.docusign.com/extension-apps/build-an-extension-app/create/) and [test your connections](https://developers.docusign.com/extension-apps/build-an-extension-app/test/).
+To [create your extension app](https://developers.docusign.com/extension-apps/build-an-extension-app/create/), open the [Developer Console](https://devconsole.docusign.com/apps) and select **+New App.** In the app manifest editor that opens, upload your manifest file or paste into the editor itself; then select Validate. Once the editor validates your manifest, select **Create App.** 
+### 4. Test the extension app
+This reference implementation uses mock data to simulate how a file can be automatically archived after the signing process is completed. [Test your extension](https://developers.docusign.com/extension-apps/build-an-extension-app/test/). Extension app tests include [integration tests](https://developers.docusign.com/extension-apps/build-an-extension-app/test/integration-tests/) (connection tests and extension tests), [functional tests](https://developers.docusign.com/extension-apps/build-an-extension-app/test/functional-tests/), and [App Center preview](https://developers.docusign.com/extension-apps/build-an-extension-app/test/app-center-preview/). 
