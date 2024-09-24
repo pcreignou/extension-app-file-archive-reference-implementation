@@ -14,24 +14,24 @@ git clone https://github.com/docusign/extension-app-file-archive-reference-imple
 
 The easiest way to generate a secret value is to run the following command:
 ```bash
-node -e "console.log(require('crypto').randomBytes(128).toString('hex'));"
+node -e "console.log(require('crypto').randomBytes(64).toString('hex'));"
 ```
 
 You will need values for `JWT_SECRET_KEY`, `OAUTH_CLIENT_ID`, `OAUTH_CLIENT_SECRET`, and `AUTHORIZATION_CODE`.
 
-### 2. Set the environment variables for the cloned repository
+### 3. Set the environment variables for the cloned repository
 - If you're running this in a development environment, create a copy of `example.development.env` and save it as `development.env`.
 - If you're running this in a production environment, create a copy of `example.production.env` and save it as `production.env`.
 - Replace `JWT_SECRET_KEY`, `OAUTH_CLIENT_ID`, `OAUTH_CLIENT_SECRET`, and `AUTHORIZATION_CODE` in `development.env` or `production.env` with your generated values. These values will be used to configure the sample proxy's mock authentication server.
 - Set the `clientId` value in the manifest.json file to the same value as `OAUTH_CLIENT_ID`.
 - Set the `clientSecret` value in the manifest.json file to the same value as `OAUTH_CLIENT_SECRET`.
-### 3. [Install and configure Node.js and npm on your machine.](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
-### 4. Install dependencies
+### 4. [Install and configure Node.js and npm on your machine.](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
+### 5. Install dependencies
 Run the following command to install the necessary dependencies:
 ```bash
 npm install
 ```
-### 5. Running the proxy server
+### 6. Running the proxy server
 #### Development mode:
 Start the proxy server in development mode by running the command:
 ```bash
