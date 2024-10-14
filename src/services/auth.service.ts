@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import { JwtPayload } from 'jsonwebtoken';
 import { AuthorizeQuery, GenerateAuthTokenBody } from '../models/auth';
 import env from '../env';
+const crypto = require('crypto');
 
 export const authorize = (req: IReqQuery<AuthorizeQuery>, res: IRes) => {
   const {
@@ -28,7 +29,9 @@ export const generateAuthToken = (req: IReq<GenerateAuthTokenBody>, res: IRes) =
     refresh_token: refreshToken,
   };
 
-  if (req.body.grant_type === 'authorization_code' && req.body.code === env.AUTHORIZATION_CODE) {
+  const decodedAuthCode = decodeURIComponent(env.AUTHORIZATION_CODE.replace(/\+/g, '%20'));
+
+  if (req.body.grant_type === 'authorization_code' && (req.body.code === decodedAuthCode || req.body.code === env.AUTHORIZATION_CODE)) {
     return res.json(jwtResponse);
   } else if (req.body.grant_type === 'refresh_token' && req.body.refresh_token) {
     const payload = jwt.verify(req.body.refresh_token, env.JWT_SECRET_KEY) as JwtPayload;
