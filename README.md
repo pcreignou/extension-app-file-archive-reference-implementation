@@ -3,7 +3,7 @@
 This reference implementation models the use case of taking an agreement PDF sent by the Docusign platform using a file archive extension app and storing it locally.
 
 ## Video Walkthrough
-[![Reference implementation videos](https://img.youtube.com/vi/_4p7GWK5aoA/0.jpg)](https://youtube.com/playlist?list=PLXpRTgmbu4oqnHn6pusz4riseJHKZ42HW&feature=shared)
+[![Reference implementation videos](https://img.youtube.com/vi/_4p7GWK5aoA/0.jpg)](https://youtube.com/playlist?list=PLXpRTgmbu4orBQrYWPAXa4EBXv0IGGzID&feature=shared)
 
 ## Setup instructions
 ### 1. Clone the repository
