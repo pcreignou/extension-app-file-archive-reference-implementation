@@ -9,9 +9,10 @@ export const authorize = (req: IReqQuery<AuthorizeQuery>, res: IRes) => {
   const {
     query: { redirect_uri: redirectUri, state },
   } = req;
+  console.log("===> Step 1: Redirecting user to your app's OAuth URL: " + redirectUri);
   return res.render('index.pug', {
     redirectUri,
-    code: env.AUTHORIZATION_CODE,
+    code: req.query.code,
     state,
   });
 };
@@ -43,6 +44,8 @@ export const generateAuthToken = (req: IReq<GenerateAuthTokenBody>, res: IRes) =
 
   throw new Error();
 };
+
+
 
 export const getUserInfo = (req: IReq, res: IRes) => {
   const token = req.headers.authorization?.split(' ')[1];
