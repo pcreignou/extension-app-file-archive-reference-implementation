@@ -29,8 +29,8 @@
         "clientId": "<CLIENT_ID>",
         "clientSecret": "<CLIENT_SECRET>",
         "customConfig": {
-          "tokenUrl": "<PROXY_BASE_URL>/api/oauth/token",
-          "authorizationUrl": "<PROXY_BASE_URL>/api/oauth/authorize",
+          "tokenUrl": "https://2ded-2a01-e0a-440-e680-bc5d-e5fe-1b42-cff5.ngrok-free.app /api/oauth/token",
+          "authorizationUrl": "https://2ded-2a01-e0a-440-e680-bc5d-e5fe-1b42-cff5.ngrok-free.app /api/oauth/authorize",
           "authorizationParams": {
             "access_type": "offline",
             "prompt": "consent"
@@ -57,7 +57,7 @@
       "template": "Document.Version1.SpecifiedArchive",
       "connectionsReference": "authentication",
       "params": {
-        "uri": "<PROXY_BASE_URL>/api/archive"
+        "uri": "https://2ded-2a01-e0a-440-e680-bc5d-e5fe-1b42-cff5.ngrok-free.app /api/archive"
       }
     }
   ],
