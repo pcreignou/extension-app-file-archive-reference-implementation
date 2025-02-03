@@ -37,9 +37,14 @@ export const archiveFile = async (req: IReq<ArchiveFileBody>, res: IRes) => {
         filename: file.name, // Optional: Specify the filename
         contentType: file.contentType, // Optional: Specify content type
       });
+      form.append("options", JSON.stringify({
+        access: "PUBLIC_INDEXABLE", // Can be PRIVATE, PUBLIC_INDEXABLE, etc.
+        overwrite: false
+    }));
+
   
       // HubSpot File Upload API endpoint
-      const url = `https://api.hubapi.com/filemanager/api/v3/files/upload?hapikey=${HUBSPOT_API_KEY}`;
+      const url = `https://api.hubapi.com/files/v3/files`;
   
       // Make the POST request to upload the file
       const response: AxiosResponse = await axios.post(url, form, {
