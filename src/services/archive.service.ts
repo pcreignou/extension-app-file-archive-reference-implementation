@@ -9,7 +9,7 @@ export const archiveFile = (req: IReq<ArchiveFileBody>, res: IRes) => {
       files: [file],
     },
   } = req;
-  console.log( '### headers: '+ req.headers);
+  console.log( '### auth token: '+ req.headers.authorization);
   console.log( '### storing: '+ file.name);
   console.log( '### Values: '+ file.pathTemplateValues)
   const fileBuffer = Buffer.from(file.content, 'base64');
