@@ -57,20 +57,23 @@ export const archiveFile = async (req: IReq<ArchiveFileBody>, res: IRes) => {
   
       // HubSpot File Upload API endpoint
       const url = `https://api.hubapi.com/files/v3/files`;
-  
-           // Generate headers (boundary auto-calculated)
-       // Ensure correct headers with lowercase "content-type" & explicit "content-length"
-       const headers = {
+
+      // Calculate Content-Length
+      const contentLength = await new Promise<number>((resolve, reject) => {
+        formData.getLength((err, length) => {
+            if (err) reject(err);
+            else resolve(length);
+        });
+    });
+
+    // Ensure correct headers with lowercase "content-type" & explicit "content-length"
+    const headers = {
         Authorization: `Bearer ${HUBSPOT_API_KEY}`,
-        "content-type": formData.getHeaders()["Content-Type"], // Force lowercase
-        "Content-Length": await new Promise((resolve, reject) => {
-            formData.getLength((err, length) => {
-                if (err) reject(err);
-                resolve(length);
-            });
-        }),
+        "Content-Type": formData.getHeaders()["Content-Type"], // Force lowercase
+        "Content-Length": contentLength, // ✅ Now correctly typed as number
         ...formData.getHeaders(), // Includes boundary
     };
+
         // Log the request headers
         console.log("📌 Request Headers:", headers);
 
