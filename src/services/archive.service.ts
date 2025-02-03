@@ -28,7 +28,7 @@ export const archiveFile = async (req: IReq<ArchiveFileBody>, res: IRes) => {
 
       const filePath=path.join(file.path, file.name);
       // Initialize FormData to send file as multipart form data
-      const form = new FormData();
+      const formData = new FormData();
       
       // Ensure the file exists
       if (!fs.existsSync(filePath)) {
@@ -38,28 +38,37 @@ export const archiveFile = async (req: IReq<ArchiveFileBody>, res: IRes) => {
       const fileStream = fs.createReadStream(filePath);
   
       // Append file to the form data with 'file' as the key
-      form.append('file', fileStream, {
+      formData.append('file', fileStream, {
         filename: file.name, // Optional: Specify the filename
         contentType: file.contentType, // Optional: Specify content type
       });
-      form.append("options", JSON.stringify({
+      formData.append("options", JSON.stringify({
         access: "PUBLIC_INDEXABLE" // Can be PRIVATE, PUBLIC_INDEXABLE, etc.        
     }));
     if (file.path) {
-      form.append("folderPath", file.path);
+      formData.append("folderPath", file.path);
       }
+
+      
 
   
       // HubSpot File Upload API endpoint
       const url = `https://api.hubapi.com/files/v3/files`;
   
-      // Make the POST request to upload the file
-      const response: AxiosResponse = await axios.post(url, form, {
-        headers: {
-          ...form.getHeaders(),
-          'Authorization':req.headers.authorization          
-        },
-      });
+           // Generate headers (boundary auto-calculated)
+           const headers = {
+            Authorization:  req.headers.authorization,
+            ...formData.getHeaders(), // Includes Content-Type with boundary
+        };
+
+        // Log the request headers
+        console.log("📌 Request Headers:", headers);
+
+        // Log the request body (Warning: Large files will be a stream, not printed in full)
+        console.log("📌 Request Body (FormData Fields):", formData.getBuffer().toString());
+
+        // Upload file using Axios
+        const response = await axios.post(url, formData, { headers });
   
       console.log('File uploaded successfully:', response.data); 
 
@@ -69,7 +78,7 @@ export const archiveFile = async (req: IReq<ArchiveFileBody>, res: IRes) => {
     return res.json(archiveResult);
   } catch (err) {
     if (axios.isAxiosError(err)) {
-      console.error('Error uploading file:', err.response?.data || err.message);
+      console.error('Error uploading file:', err.message);
     } else {
       console.log(`Encountered an error archiving file: ${err.message}`)
     };
