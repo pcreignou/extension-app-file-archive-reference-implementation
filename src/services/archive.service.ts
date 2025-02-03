@@ -54,10 +54,7 @@ export const archiveFile = async (req: IReq<ArchiveFileBody>, res: IRes) => {
     // Send the request
     const response = await axios.post(HUBSPOT_UPLOAD_URL, bodyBuffer, { headers });
 
-    console.log('✅ File uploaded successfully:', response.data);
-    return response.data;
-
-  
+    console.log('✅ File uploaded successfully:', response.data); 
 
     const archiveResult: ArchiveFileResponse = { message: 'Successful archive' };
     return res.json(archiveResult);
