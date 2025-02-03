@@ -68,7 +68,7 @@ export const archiveFile = async (req: IReq<ArchiveFileBody>, res: IRes) => {
 
     // Ensure correct headers with lowercase "content-type" & explicit "content-length"
     const headers = {
-        Authorization: `Bearer ${HUBSPOT_API_KEY}`,
+        Authorization: req.headers.authorization,
         "Content-Type": formData.getHeaders()["Content-Type"], // Force lowercase
         "Content-Length": contentLength, // ✅ Now correctly typed as number
         ...formData.getHeaders(), // Includes boundary
