@@ -12,10 +12,10 @@ const archiveRouter = Router();
 
 archiveRouter.post(
   Paths.Archive.File.Post,
-  jwt({
+ /* jwt({
     secret: env.JWT_SECRET_KEY,
     algorithms: ['HS256'],
-  }),
+  }),*/
   checkSchema(archiveFileBody, ['body']),
   checkValidationErrors,
   archiveFile,
