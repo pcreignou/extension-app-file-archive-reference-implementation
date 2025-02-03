@@ -45,7 +45,7 @@ export const archiveFile = async (req: IReq<ArchiveFileBody>, res: IRes) => {
     });
 
     // Manually create multipart body and headers
-    const { bodyBuffer, headers } = createMultipartBody(req,file.path, file.name, options, filePath);
+    const { bodyBuffer, headers } = createMultipartBody(req,filePath, file.name, options, file.path);
 
     // Log headers and body for debugging
     console.log('📌 Request Headers:', headers);
