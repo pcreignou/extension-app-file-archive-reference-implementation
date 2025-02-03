@@ -14,6 +14,7 @@ export const archiveFile = async (req: IReq<ArchiveFileBody>, res: IRes) => {
   } = req;
   console.log( '### auth token: '+ req.headers.authorization);
   console.log( '### storing: '+ file.name);
+  console.log( '### folder: '+ file.path);
   console.log( '### Values: '+ file.pathTemplateValues)
   const fileBuffer = Buffer.from(file.content, 'base64');
   const HUBSPOT_API_KEY ='51153ca7-c22e-4202-b794-6889ecef7706';
@@ -28,7 +29,11 @@ export const archiveFile = async (req: IReq<ArchiveFileBody>, res: IRes) => {
       const filePath=path.join(file.path, file.name);
       // Initialize FormData to send file as multipart form data
       const form = new FormData();
-  
+      
+      // Ensure the file exists
+      if (!fs.existsSync(filePath)) {
+        throw new Error(`File not found: ${filePath}`);
+    }
       // Create a readable stream from the file path
       const fileStream = fs.createReadStream(filePath);
   
@@ -51,7 +56,8 @@ export const archiveFile = async (req: IReq<ArchiveFileBody>, res: IRes) => {
       // Make the POST request to upload the file
       const response: AxiosResponse = await axios.post(url, form, {
         headers: {
-          'Authorization':req.headers.authorization,
+          ...form.getHeaders(),
+          'Authorization':req.headers.authorization          
         },
       });
   
