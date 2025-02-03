@@ -18,6 +18,7 @@ export const authorize = (req: IReqQuery<AuthorizeQuery>, res: IRes) => {
 };
 
 export const generateAuthToken = (req: IReq<GenerateAuthTokenBody>, res: IRes) => {
+  console.log(req.body);
   const accessToken = jwt.sign({ type: 'access_token', sub: crypto.randomUUID(), email: `${crypto.randomUUID()}@test.com` }, env.JWT_SECRET_KEY, {
     expiresIn: 3600,
   });
