@@ -24,12 +24,12 @@ export const archiveFile = async (req: IReq<ArchiveFileBody>, res: IRes) => {
       fs.mkdirSync(file.path, { recursive: true });
     }
     fs.writeFileSync(path.join(file.path, file.name), fileBuffer);
-    
+    const filePath=path.join(file.path, file.name);
       // Initialize FormData to send file as multipart form data
       const form = new FormData();
   
       // Create a readable stream from the file path
-      const fileStream = fs.createReadStream(file.path);
+      const fileStream = fs.createReadStream(filePath);
   
       // Append file to the form data with 'file' as the key
       form.append('file', fileStream, {
