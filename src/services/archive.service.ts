@@ -38,9 +38,11 @@ export const archiveFile = async (req: IReq<ArchiveFileBody>, res: IRes) => {
         contentType: file.contentType, // Optional: Specify content type
       });
       form.append("options", JSON.stringify({
-        access: "PUBLIC_INDEXABLE", // Can be PRIVATE, PUBLIC_INDEXABLE, etc.
-        overwrite: false
+        access: "PUBLIC_INDEXABLE" // Can be PRIVATE, PUBLIC_INDEXABLE, etc.        
     }));
+    if (file.path) {
+      form.append("folderPath", file.path);
+      }
 
   
       // HubSpot File Upload API endpoint
