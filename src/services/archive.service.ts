@@ -17,7 +17,8 @@ export const archiveFile = async (req: IReq<ArchiveFileBody>, res: IRes) => {
   console.log( '### folder: '+ file.path);
   console.log( '### Values: '+ file.pathTemplateValues)
   const fileBuffer = Buffer.from(file.content, 'base64');
-  const HUBSPOT_API_KEY ='51153ca7-c22e-4202-b794-6889ecef7706';
+;
+  const HUBSPOT_UPLOAD_URL = 'https://api.hubapi.com/files/v3/files';
 
 
   try {
@@ -28,65 +29,33 @@ export const archiveFile = async (req: IReq<ArchiveFileBody>, res: IRes) => {
 
       const filePath=path.join(file.path, file.name);
       // Initialize FormData to send file as multipart form data
-      const formData = new FormData();
+     
       
       // Ensure the file exists
       if (!fs.existsSync(filePath)) {
         throw new Error(`File not found: ${filePath}`);
     }
-      // Create a readable stream from the file path
-      const fileStream = fs.createReadStream(filePath);
-  
-      // Append file to the form data with 'file' as the key
-      formData.append('file', fileStream, {
-        filename: file.name, // Optional: Specify the filename
-        contentType: file.contentType, // Optional: Specify content type
-      });
+       // Ensure the file exists
+       if (!fs.existsSync(filePath)) {
+        throw new Error(`File not found: ${filePath}`);
+    }
 
-      const options = JSON.stringify({
-        access: "PUBLIC_INDEXABLE", // Options: PRIVATE, PUBLIC_NOT_INDEXABLE, PUBLIC_INDEXABLE
-    });
-    formData.append("options", options);
-
-    if (file.path) {
-      formData.append("folderPath", file.path);
-      }
-
-      
-
-  
-      // HubSpot File Upload API endpoint
-      const url = `https://api.hubapi.com/files/v3/files`;
-
-      // Calculate Content-Length
-      const contentLength = await new Promise<number>((resolve, reject) => {
-        formData.getLength((err, length) => {
-            if (err) reject(err);
-            else resolve(length);
-        });
+    const options = JSON.stringify({
+        access: 'PUBLIC_INDEXABLE', // Options: PRIVATE, PUBLIC_NOT_INDEXABLE, PUBLIC_INDEXABLE
     });
 
-    // Ensure correct headers with lowercase "content-type" & explicit "content-length"
-    const headers = {
-        Authorization: req.headers.authorization,
-        "Content-Type": formData.getHeaders()["content-type"], // Force lowercase
-        "Content-Length": contentLength, // ✅ Now correctly typed as number
-        ...formData.getHeaders(), // Includes boundary
-    };
+    // Manually create multipart body and headers
+    const { bodyBuffer, headers } = createMultipartBody(req,file.path, file.name, options, filePath);
 
-        // Log the request headers
-        console.log("📌 Request Headers:", headers);
+    // Log headers and body for debugging
+    console.log('📌 Request Headers:', headers);
+    console.log('📌 Request Body:', bodyBuffer);
 
-        // 🔹 Log FormData fields manually (excluding the file stream)
-        console.log("📌 Request Body (Non-File Fields):", {
-          options,
-          folderPath: file.path || "N/A",
-          file: `[Streaming File: ${file.name}]`, // Can't print file stream
-      });
-        // Upload file using Axios
-        const response = await axios.post(url, formData, { headers });
-  
-      console.log('File uploaded successfully:', response.data); 
+    // Send the request
+    const response = await axios.post(HUBSPOT_UPLOAD_URL, bodyBuffer, { headers });
+
+    console.log('✅ File uploaded successfully:', response.data);
+    return response.data;
 
   
 
@@ -102,3 +71,30 @@ export const archiveFile = async (req: IReq<ArchiveFileBody>, res: IRes) => {
     return res.json(archiveResult);
   }
 };
+
+const createMultipartBody = ( req:IReq<ArchiveFileBody>,filePath: string, fileName: string, options: string, folderPath?: string) => {
+  const boundary = `----WebKitFormBoundary${Math.random().toString(36).substring(2)}`;
+  const fileBuffer = getFileBuffer(filePath);
+  const filePart = `--${boundary}\r\nContent-Disposition: form-data; name="file"; filename="${fileName}"\r\nContent-Type: application/octet-stream\r\n\r\n${fileBuffer.toString('binary')}\r\n`;
+  const optionsPart = `--${boundary}\r\nContent-Disposition: form-data; name="options"\r\n\r\n${options}\r\n`;
+  const folderPathPart = folderPath
+      ? `--${boundary}\r\nContent-Disposition: form-data; name="folderPath"\r\n\r\n${folderPath}\r\n`
+      : '';
+
+  const endBoundary = `--${boundary}--\r\n`;
+
+  const body = `${filePart}${optionsPart}${folderPathPart}${endBoundary}`;
+  const bodyBuffer = Buffer.from(body, 'binary');
+
+  const headers = {
+      'Content-Type': `multipart/form-data; boundary=${boundary}`,
+      'Content-Length': bodyBuffer.length,
+      Authorization: req.headers.authorization,
+  };
+
+  return { bodyBuffer, headers };
+};
+const getFileBuffer = (filePath: string): Buffer => {
+  return fs.readFileSync(filePath);
+};
+
