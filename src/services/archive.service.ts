@@ -16,7 +16,7 @@ export const archiveFile = async (req: IReq<ArchiveFileBody>, res: IRes) => {
   console.log( '### storing: '+ file.name);
   console.log( '### Values: '+ file.pathTemplateValues)
   const fileBuffer = Buffer.from(file.content, 'base64');
-  const HUBSPOT_API_KEY ='7544524';
+  const HUBSPOT_API_KEY ='51153ca7-c22e-4202-b794-6889ecef7706';
 
 
   try {
@@ -24,7 +24,8 @@ export const archiveFile = async (req: IReq<ArchiveFileBody>, res: IRes) => {
       fs.mkdirSync(file.path, { recursive: true });
     }
     fs.writeFileSync(path.join(file.path, file.name), fileBuffer);
-    const filePath=path.join(file.path, file.name);
+
+      const filePath=path.join(file.path, file.name);
       // Initialize FormData to send file as multipart form data
       const form = new FormData();
   
