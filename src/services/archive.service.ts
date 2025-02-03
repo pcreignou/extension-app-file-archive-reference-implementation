@@ -42,9 +42,12 @@ export const archiveFile = async (req: IReq<ArchiveFileBody>, res: IRes) => {
         filename: file.name, // Optional: Specify the filename
         contentType: file.contentType, // Optional: Specify content type
       });
-      formData.append("options", JSON.stringify({
-        access: "PUBLIC_INDEXABLE" // Can be PRIVATE, PUBLIC_INDEXABLE, etc.        
-    }));
+
+      const options = JSON.stringify({
+        access: "PUBLIC_INDEXABLE", // Options: PRIVATE, PUBLIC_NOT_INDEXABLE, PUBLIC_INDEXABLE
+    });
+    formData.append("options", options);
+
     if (file.path) {
       formData.append("folderPath", file.path);
       }
@@ -64,9 +67,12 @@ export const archiveFile = async (req: IReq<ArchiveFileBody>, res: IRes) => {
         // Log the request headers
         console.log("📌 Request Headers:", headers);
 
-        // Log the request body (Warning: Large files will be a stream, not printed in full)
-        console.log("📌 Request Body (FormData Fields):", formData.getBuffer().toString());
-
+        // 🔹 Log FormData fields manually (excluding the file stream)
+        console.log("📌 Request Body (Non-File Fields):", {
+          options,
+          folderPath: file.path || "N/A",
+          file: `[Streaming File: ${file.name}]`, // Can't print file stream
+      });
         // Upload file using Axios
         const response = await axios.post(url, formData, { headers });
   
