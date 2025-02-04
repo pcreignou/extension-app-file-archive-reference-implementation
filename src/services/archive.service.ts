@@ -3,7 +3,7 @@ import { ArchiveFileBody, ArchiveFileResponse } from '../models/archive';
 import { IReq, IRes } from '../utils/types';
 import axios, { AxiosResponse } from 'axios';
 import fs from 'fs';
-import FormData from 'form-data';
+
 
 
 export const archiveFile = async (req: IReq<ArchiveFileBody>, res: IRes) => {
