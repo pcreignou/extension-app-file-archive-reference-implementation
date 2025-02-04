@@ -19,6 +19,7 @@ export const archiveFile = async (req: IReq<ArchiveFileBody>, res: IRes) => {
   const fileBuffer = Buffer.from(file.content, 'base64');
 ;
   const HUBSPOT_UPLOAD_URL = 'https://api.hubapi.com/files/v3/files';
+  const HUBSPOT_ASSOCIATION_URL = 'https://api.hubapi.com/crm/v3/objects/notes';
 
 
   try {
@@ -52,9 +53,45 @@ export const archiveFile = async (req: IReq<ArchiveFileBody>, res: IRes) => {
     console.log('📌 Request Body:', bodyBuffer);
 
     // Send the request
-    const response = await axios.post(HUBSPOT_UPLOAD_URL, bodyBuffer, { headers });
+    const uploadResponse = await axios.post(HUBSPOT_UPLOAD_URL, bodyBuffer, { headers });
 
-    console.log('✅ File uploaded successfully:', response.data); 
+    console.log('✅ File uploaded successfully:', uploadResponse.data.id); 
+
+    //now link the file to the notes of HS Object
+
+    const now = new Date();
+    let isoTimeNow = now.toISOString();
+
+    const associationPayload = JSON.stringify({
+      properties: {
+        hs_timestamp: isoTimeNow,
+        hs_note_body: "Description of the note and context for the attachment.",
+        hs_attachment_ids: uploadResponse.data.id// This is the fileId
+      },
+      associations: [
+        {
+          to: {
+            id: file.pathTemplateValues?[0]:'' // This is the dealId-->always in first position until we can pass metadata
+          },
+          types: [
+            {
+              associationCategory:"HUBSPOT_DEFINED",
+              associationTypeId: "214" // This is the associationTypeId for notes with deals --> todo  build the logic for any association type
+            }
+          ]
+        }
+      ]
+    });
+
+    const associationHeaders = {
+      'Content-Type': 'application/json',      
+      Authorization: req.headers.authorization
+    };
+    const associationResponse = await axios.post(HUBSPOT_ASSOCIATION_URL, associationPayload,{headers:associationHeaders});
+
+    console.log('✅ File associated successfully:', associationResponse.data); 
+    
+    
 
     const archiveResult: ArchiveFileResponse = { message: 'Successful archive' };
     return res.json(archiveResult);
